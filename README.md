@@ -1,2 +1,1 @@
-# smartvim
-💡 Vim tutorial (that's not dumb)
+# 💡 Vim tutorial (that's not dumb)
