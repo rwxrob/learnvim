@@ -1,36 +1,62 @@
 package main
 
 import (
+	"embed"
 	_ "embed"
+	"log"
 	"os"
+	"text/template"
 
-	"github.com/rwxrob/smartvimtutorial/internal"
+	"github.com/rwxrob/learnvim/internal"
 )
 
-//go:embed tutorial.txt
-var tutorial string
-
-//go:embed vimrc
-var vimrc string
+//go:embed all:files
+var f embed.FS
 
 func main() {
 
-	tutfile, err := os.CreateTemp(``, `smartvimtutorial-`)
-	defer tutfile.Close()
-	defer os.Remove(tutfile.Name())
-	if err != nil {
-		os.Exit(1)
-	}
-	tutfile.WriteString(tutorial)
-
-	vimrcfile, err := os.CreateTemp(``, `smartvimrc-`)
+	// create custom vimrc for this session
+	vimrcfile, err := os.CreateTemp(``, `learnvim-`)
 	defer vimrcfile.Close()
 	defer os.Remove(vimrcfile.Name())
 	if err != nil {
-		os.Exit(1)
+		log.Fatal(err)
 	}
-	vimrcfile.WriteString(vimrc)
+	vimrc, err := f.ReadFile(`files/vimrc`)
+	if err != nil {
+		log.Fatal(err)
+	}
+	vimrcfile.Write(vimrc)
 
+	// create the temporary file and clean up
+	tutfile, err := os.CreateTemp(``, `learnvim-`)
+	defer tutfile.Close()
+	defer os.Remove(tutfile.Name())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	custom := template.FuncMap{
+		`has`:    internal.Has,
+		`goos`:   internal.GOOS,
+		`goarch`: internal.GOARCH,
+	}
+
+	data := map[string]any{`this`: `that`}
+
+	t, err := template.New(`tutorial.txt`).Funcs(custom).ParseFS(f, `files/*.txt`)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err := t.Execute(tutfile, data); err != nil {
+		log.Fatal(err)
+	}
+
+	// TODO compile the template
+	//tutorial, err := f.ReadFile(`files/tutorial.txt`)
+
+	// hand off execution to vim itself using our custom vimrc
 	internal.Exec(`vim`, `-u`, vimrcfile.Name(), tutfile.Name())
 
 }

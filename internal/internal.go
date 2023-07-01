@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"runtime"
 )
 
 // Exec checks for existence of first argument as an executable on the
@@ -27,3 +28,17 @@ func Exec(args ...string) error {
 	cmd.Stderr = os.Stderr
 	return cmd.Run()
 }
+
+// Has returns true if any of the names are found in the exec.LookPath.
+func Has(names ...string) bool {
+	for _, name := range names {
+		_, err := exec.LookPath(name)
+		if err == nil {
+			return true
+		}
+	}
+	return false
+}
+
+func GOOS() string   { return runtime.GOOS }
+func GOARCH() string { return runtime.GOARCH }

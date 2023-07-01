@@ -1,0 +1,234 @@
+========================================================================
+                            How to exit vim
+               (and other happy-fun lessons for vim noobs)
+========================================================================
+
+   Vim is the most powerful and ubiquitous terminal-based editor ever
+   created. Everyone should learn it simply because it is often the only
+   editor available from the terminal. This tutorial is designed to take
+   the place vimtutor.
+
+   This tutorial is for absolute beginners. Contrary to popular belief,
+   Vim basics can be mastered in 10 minutes making basic Vim far easier
+   to learn than even nano for beginners (yes, including exiting).
+   Beginners can layer additional Vim skills on top of the basics. Like
+   so many things in the UNIX/Linux universe, there is always more to
+   learn. Hopefully, starting you out right will boost your interest to
+   get started and learn the rest.
+
+   (Press and hold j (or down arrow) to move to the next section.)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                        How to use this file
+
+   This file was auto-generated and can be modified without fear. You
+   can save the file as you go in order to pick up where you left off.
+   To save the file type something similar to the following:
+
+     :w imlearningvim<ENTER>
+
+   (Press and hold j (or down arrow) to move to the next section.)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                     Ultra-brief history of Vim
+        (yes, you can skip this if you are in a hurry, but don't)
+
+   * Ed is the official UNIX editor. It was the first terminal editor
+     ever created in order to develop the UNIX operating system (the
+     same reason that the C language was invented).
+
+   * Ex is an improved version of Ed. It keeps compatibility with Ed but
+     add additional features such as a "visual" mode.
+
+   * Vi (pronounced V-I) *is* ex in visual mode. In fact, the original
+     configuration file is still called .exrc.
+
+   * Ex/Vi are installed by default on most UNIX/Linux systems. Many of
+     these, however, have aliased vi to vim, but not all.
+
+   * Vim is an "improved" version of Vi which adds many significant
+     improvements (and many unnecessary ones). Most systems have vim.
+
+   STOP: You really should take the time to learn ed before proceeding
+   with learning vi/vim. It takes about 20 minutes. The rest of this tutorial
+   will make much more sense and your ability to modify text files and
+   streams from the command line without an editor using the sed
+   command will be greatly improved.
+
+   (Press and hold j (or down arrow) to move to the next section.)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                            Vim essentials
+                    (survive vi, easier than nano)
+
+   People who joke about problems exiting vim learned it incorrectly.
+   It's actually rather easy, even easier than nano (which you can
+   safely skip learning now that you are learning vim properly).
+
+   Vim has two modes: normal and INSERT. Use i to get into INSERT mode
+   and Control-[ (or ESC) to return to normal mode. (Avoid bad
+   recommendations to remap these keys---or even worse---use Control-C
+   instead of ESC which will not work on most UNIX systems and sends
+   a interrupt to your process, a very bad habit indeed.)
+
+   The secret of learning vim essentials is to allow yourself to use the
+   arrow keys while in both normal and INSERT modes as a beginner
+   knowing that you will graduate to commands and hjkl navigation later.
+   Once you know this secret, all you need to learn are the following
+   intuitive essentials:
+
+   * Open file with vi/vim:     vi <file> OR vim <file>  (from shell)
+   * Switch to INSERT mode:     i                        Normal
+   * Switch to normal mode:     Control-[ (or ESC)       INSERT
+   * Quit without saving:       :q!                      Normal
+   * Save without quitting:     :w                       Normal
+   * Save and quit:             ZZ (or :wq)              Normal
+   * Move left:                 ←                        Both
+   * Move right:                →                        Both
+   * Move up:                   ↑                        Both
+   * Move down:                 ↓                        Both
+   * Look up help:              :h <whatever>            Normal
+
+   Congratulations! You've learned vi! You can now officially use vim to
+   edit *anything* without fear! Any file can be edited with nothing
+   more than those few commands. The rest builds on these essentials.
+   Practice using these right now to edit different files.
+
+   (Press and hold j (or down arrow) to move to the next section.)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                  Searching and search-centric editing
+
+   The most important command (after learning the essentials) is how to
+   search through a file to navigate to that position before editing.
+   This command can then be combined with all other commands to create
+   powerful combinations leading to "search-centric" editing. The search
+   command (/) you will learn also applies to UNIX/Linux pager programs,
+   web browsers, and applications. This approach to editing also applies
+   to editing files outside of vim in-line using sed and similar tools
+   from the command line.
+
+  * Search forward:                    /<word>       Command
+  * Search backward:                   ?<word>       Command
+  * Search forward for current word:   *             Command
+  * Search for next:                   n             Command
+  * Search for previous:               N             Command
+
+  (Press and hold j (or down arrow) to move to the next section.)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                        Repeating the last edit
+
+                                  TODO
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                              Saving files
+
+   Getting in the habit of regular saving your file during a session
+   will save you eventual heart-ache is something goes wrong while
+   editing (and adding git version management to your workflow will make
+   you feel even safer later).
+
+   * Save current file:                 :w            Command
+   * Save copy to different file:       :w <file>     Command
+
+   It is very easy to open a new file for editing only to realize you do
+   not have permissions to save to that location later. In order to save
+   lost work in such a circumstance use :w /tmp/other to save to another
+   file temporarily and them move it as needed. One way to avoid this
+   problem is to touch the file first to created it before editing it so
+   that you know you have permissions to create the file at that
+   location.
+
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                   Refresh screen and search results
+
+   You've probably noticed that things can happen to your terminal
+   during an editing session that can make it hard to read (wall
+   messages, etc.). Here's how to get it back.
+
+   * Disable last search results:      :nohl         Command
+
+   Note that these two can be easily combined into a single Control-L
+   command with the following addition to your ~/.vimrc file:
+
+     nnoremap <C-L> :nohl<CR><C-L>
+
+   If you ever happen to accidentally suspend your terminal with
+   Control-S just remember you can unsuspend it with Control-Q. To
+   disable this entirely from ever bothering you again add the following
+   to your ~/.profile, ~/.bashrc (or equivalent, which disables both
+   control-s and control-q for terminal flow control):
+
+    stty -ixon
+
+   (Note that there are some very real reasons *not* to disable this,
+   but for almost all beginners it makes the most sense and can be
+   easily turned back on with stty ixon.)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                       Opening and reading files
+
+                                  TODO
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                      Spelling and spell checking
+
+                                  TODO
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                    Centering a single line of text
+
+                                  TODO
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      UNIX filters: the most magical reason to learn and use vim
+
+                                  TODO
+
+   Learning to use UNIX filters properly from within a vim session is
+   the single most powerful reason to learn and use vim. Surprisingly,
+   most vim veterans have no idea this power exists. Now you will.
+
+   What is a "UNIX filter" you ask?
+
+     "In UNIX/Linux, filters are the set of commands that take input
+     from standard input stream i.e. stdin, perform some operations and
+     write output to standard output stream i.e.  stdout.  The stdin and
+     stdout can be managed as per preferences using redirection and
+     pipes. Common filter commands are: grep, more, sort."
+     (geeksforgeeks.org)
+
+   I noticed you are learning Vim on "{{goos}}".
+
+    {{ if has "bash" "ksh" "zsh" -}}
+
+   Modern shell:
+
+for i in {1..5}; do echo $i. item; done
+
+    {{- end}}
+
+    {{ if has "sh" -}}
+
+    POSIX shell:
+
+for i in `seq 1 5`; do echo $i. item; done
+
+    {{- end}}
+
+    {{ if has "python" "python3" -}}
+
+    Python (might be python3):
+
+[print(f"Item {x}.") for x in range (1,6)]
+
+    {{- end}}
+
+    {{ if has "bc" -}}
+    Need to do some complicated math? Try the line wand again but this
+    time send it to the bc command.
+
+scale=8; 22/7
+
+    {{- end }}
